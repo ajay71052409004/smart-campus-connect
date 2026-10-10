@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in · Smart Campus Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-body">
+  <main class="auth">
+    <section class="auth-side">
+      <div class="brand">
+        <span class="brand-mark">SC</span>
+        <span class="brand-name">Smart Campus<br>Connect</span>
+      </div>
+      <div>
+        <h1>Leave letters, without the paper trail.</h1>
+        <p>Students send a leave request online. Staff approve or reject it with a remark. Both sides see the status right away.</p>
+      </div>
+    </section>
+
+    <section class="auth-card">
+      <h2 id="authTitle">Log in</h2>
+
+      <div class="seg" role="radiogroup" aria-label="I am a">
+        <label><input type="radio" name="role" value="student" checked><span>Student</span></label>
+        <label><input type="radio" name="role" value="staff"><span>Staff</span></label>
+      </div>
+
+      <form class="form" id="authForm">
+        <label class="reg-only" hidden>Full name
+          <input type="text" id="name" autocomplete="name" maxlength="60">
+        </label>
+        <label><span id="idLabel">Register number</span>
+          <input type="text" id="loginId" autocomplete="username" required>
+        </label>
+        <div class="field-row reg-only" hidden>
+          <label>Department
+            <select id="department"><option value="">Choose</option></select>
+          </label>
+          <label>Year
+            <select id="year">
+              <option value="">Choose</option>
+              <option value="1">1st year</option>
+              <option value="2">2nd year</option>
+              <option value="3">3rd year</option>
+              <option value="4">4th year</option>
+            </select>
+          </label>
+        </div>
+        <label>Password
+          <input type="password" id="password" autocomplete="current-password" required>
+        </label>
+        <p class="form-error" id="authError" role="alert" hidden></p>
+        <button class="btn" type="submit" id="authSubmit">Log in</button>
+      </form>
+
+      <p class="switch" id="switchRow">
+        New student? <button type="button" class="link" id="switchMode">Create an account</button>
+      </p>
+    </section>
+  </main>
+  <script src="login.js"></script>
+</body>
+</html>

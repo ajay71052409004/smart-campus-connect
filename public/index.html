@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Campus Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">SC</span>
+      <span class="brand-name">Smart Campus<br>Connect</span>
+    </div>
+
+    <nav class="nav" aria-label="Main">
+      <button class="nav-btn active" data-view="dashboard"><span class="ico">🏠</span><span>Dashboard</span></button>
+      <button class="nav-btn" data-view="announcements"><span class="ico">📢</span><span>Announcements</span></button>
+      <button class="nav-btn" data-view="leave"><span class="ico">📝</span><span>Leave</span></button>
+      <button class="nav-btn" data-view="complaints"><span class="ico">🛠️</span><span>Complaints</span></button>
+      <button class="nav-btn" data-view="lostfound"><span class="ico">🔍</span><span>Lost &amp; Found</span></button>
+      <button class="nav-btn" data-view="transport"><span class="ico">🚌</span><span>Transport</span></button>
+      <button class="nav-btn" data-view="assistant"><span class="ico">💬</span><span>Help</span></button>
+    </nav>
+
+    <button class="profile" id="profileBtn" title="Change your name">
+      <span class="avatar" id="avatar">S</span>
+      <span class="profile-text">
+        <strong id="profileName">Student</strong>
+        <small>Log out</small>
+      </span>
+    </button>
+  </aside>
+
+  <main class="main">
+
+    <!-- Dashboard -->
+    <section class="view active" id="view-dashboard">
+      <header class="page-head head-row">
+        <div>
+          <h1 id="greeting">Hello</h1>
+          <p id="todayText"></p>
+        </div>
+        <button class="btn ghost" id="logoutBtn">Log out</button>
+      </header>
+
+      <div class="next-bus">
+        <div>
+          <p class="muted">Next bus on your route</p>
+          <h2 id="nextBusTitle">–</h2>
+          <p id="nextBusSub" class="muted"></p>
+        </div>
+        <button class="btn light" data-goto="transport">See all buses</button>
+      </div>
+
+      <div class="stats">
+        <button class="stat" data-goto="announcements"><b id="statAnn">0</b><span>New announcements</span></button>
+        <button class="stat" data-goto="leave"><b id="statLeave">0</b><span id="statLeaveLabel">Leave requests pending</span></button>
+        <button class="stat" data-goto="complaints"><b id="statComp">0</b><span>Open complaints</span></button>
+        <button class="stat" data-goto="lostfound"><b id="statLost">0</b><span>Items waiting to be claimed</span></button>
+      </div>
+
+      <div class="two-col">
+        <div class="panel" id="timetablePanel">
+          <h3>Today's classes</h3>
+          <ul class="timeline" id="timetable"></ul>
+        </div>
+        <div class="panel">
+          <h3>Pinned notice</h3>
+          <div id="pinnedBox"></div>
+          <h3 class="mt">Quick actions</h3>
+          <div class="chips">
+            <button class="chip" data-goto="complaints">Report a problem</button>
+            <button class="chip" data-goto="lostfound">Post a lost item</button>
+            <button class="chip" data-goto="assistant">Ask the helper</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Announcements -->
+    <section class="view" id="view-announcements">
+      <header class="page-head">
+        <h1>Announcements</h1>
+        <p>Notices from the college office and departments.</p>
+      </header>
+      <div class="chips" id="annFilters"></div>
+      <div id="annList" class="stack"></div>
+    </section>
+
+    <!-- Complaints -->
+    <section class="view" id="view-complaints">
+      <header class="page-head">
+        <h1>Campus complaints</h1>
+        <p>Report a problem. You can track its status here.</p>
+      </header>
+      <div class="two-col">
+        <form class="panel form" id="complaintForm">
+          <h3>New complaint</h3>
+          <label>Category
+            <select name="category" required>
+              <option value="">Choose one</option>
+              <option>Classroom</option>
+              <option>Hostel</option>
+              <option>Canteen</option>
+              <option>Library</option>
+              <option>Wi-Fi / Internet</option>
+              <option>Water / Electricity</option>
+              <option>Transport</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>Where is it?
+            <input name="location" type="text" placeholder="e.g. Block B, Room 204" required>
+          </label>
+          <label>What is the problem?
+            <textarea name="details" rows="4" placeholder="Describe what happened" required></textarea>
+          </label>
+          <button class="btn" type="submit">Submit complaint</button>
+        </form>
+        <div>
+          <div class="stack" id="complaintList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lost & Found -->
+    <section class="view" id="view-lostfound">
+      <header class="page-head">
+        <h1>Lost &amp; Found</h1>
+        <p>Lost something? Found something? Post it here.</p>
+      </header>
+      <div class="two-col">
+        <form class="panel form" id="lfForm">
+          <h3>Post an item</h3>
+          <div class="seg" role="radiogroup" aria-label="Type">
+            <label><input type="radio" name="type" value="Lost" checked><span>I lost it</span></label>
+            <label><input type="radio" name="type" value="Found"><span>I found it</span></label>
+          </div>
+          <label>Item
+            <input name="item" type="text" placeholder="e.g. Black water bottle" required>
+          </label>
+          <label>Where?
+            <input name="place" type="text" placeholder="e.g. Library, 2nd floor" required>
+          </label>
+          <label>Contact
+            <input name="contact" type="text" placeholder="Phone number or email" required>
+          </label>
+          <button class="btn" type="submit">Post item</button>
+        </form>
+        <div>
+          <div class="toolbar">
+            <input type="search" id="lfSearch" placeholder="Search items">
+            <div class="chips" id="lfFilters">
+              <button class="chip active" data-f="All">All</button>
+              <button class="chip" data-f="Lost">Lost</button>
+              <button class="chip" data-f="Found">Found</button>
+            </div>
+          </div>
+          <div class="stack" id="lfList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transport -->
+    <section class="view" id="view-transport">
+      <header class="page-head">
+        <h1>Transport</h1>
+        <p>College bus routes and today's timings.</p>
+      </header>
+      <div class="stack" id="routeList"></div>
+    </section>
+
+    <!-- Leave -->
+    <section class="view" id="view-leave">
+      <header class="page-head">
+        <h1 id="leaveTitle">Leave letter</h1>
+        <p id="leaveSub"></p>
+      </header>
+
+      <div class="two-col" id="studentLeave" hidden>
+        <form class="panel form" id="leaveForm">
+          <h3>New leave letter</h3>
+          <label>Type of leave
+            <select name="leaveType" required>
+              <option value="">Choose one</option>
+              <option>Medical</option>
+              <option>Personal</option>
+              <option>Family function</option>
+              <option>On-duty</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <div class="field-row">
+            <label>From
+              <input type="date" name="fromDate" required>
+            </label>
+            <label>To
+              <input type="date" name="toDate" required>
+            </label>
+          </div>
+          <p class="hint" id="leaveDays"></p>
+          <label>Reason
+            <textarea name="reason" rows="5" minlength="10" maxlength="1000" placeholder="Write why you need leave. Your staff will read this." required></textarea>
+          </label>
+          <button class="btn" type="submit">Send to staff</button>
+        </form>
+        <div class="stack" id="myLeaves"></div>
+      </div>
+
+      <div id="staffLeave" hidden>
+        <div class="chips" id="leaveFilters">
+          <button class="chip active" data-lf="Pending">Pending</button>
+          <button class="chip" data-lf="Approved">Approved</button>
+          <button class="chip" data-lf="Rejected">Rejected</button>
+          <button class="chip" data-lf="All">All</button>
+        </div>
+        <div class="stack" id="leaveQueue"></div>
+      </div>
+    </section>
+
+    <!-- Assistant -->
+    <section class="view" id="view-assistant">
+      <header class="page-head">
+        <h1>Campus helper</h1>
+        <p>Ask about timings, fees, hostel, library and more.</p>
+      </header>
+      <div class="chat panel">
+        <div class="chat-log" id="chatLog" aria-live="polite"></div>
+        <div class="chips" id="chatChips"></div>
+        <form class="chat-form" id="chatForm">
+          <input id="chatInput" type="text" placeholder="Type your question" autocomplete="off">
+          <button class="btn" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
